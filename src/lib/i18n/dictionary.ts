@@ -109,6 +109,20 @@ export const DICT: Record<string, Record<Locale, string>> = {
   "donor.decline": { en: "Decline", bn: "প্রত্যাখ্যান" },
   "donor.history": { en: "Donation history", bn: "রক্তদানের ইতিহাস" },
   "donor.nextEligible": { en: "Next eligible", bn: "পরবর্তী যোগ্যতা" },
+  "donor.become": { en: "Become a donor", bn: "রক্তদাতা হোন" },
+  "donor.becomeHint": {
+    en: "Join the network and save lives near you",
+    bn: "নেটওয়ার্কে যোগ দিন এবং কাছের জীবন বাঁচান",
+  },
+  "donor.yourName": { en: "Your name", bn: "আপনার নাম" },
+  "donor.yourArea": { en: "Your area", bn: "আপনার এলাকা" },
+  "donor.yourPhone": { en: "Phone", bn: "ফোন" },
+  "donor.registerCta": { en: "Register as donor", bn: "রক্তদাতা হিসেবে নিবন্ধন" },
+  "donor.registered": { en: "You're a verified donor 🩸", bn: "আপনি একজন যাচাইকৃত রক্তদাতা 🩸" },
+  "donor.openRequests": { en: "Open requests near you", bn: "আপনার কাছের খোলা অনুরোধ" },
+  "donor.donateNow": { en: "Donate", bn: "রক্ত দিন" },
+  "donor.noRequests": { en: "No open requests right now.", bn: "এই মুহূর্তে কোনো খোলা অনুরোধ নেই।" },
+  "donor.thanksTitle": { en: "Thank you for donating 🩸", bn: "রক্তদানের জন্য ধন্যবাদ 🩸" },
 
   // Hospital
   "hospital.title": { en: "Hospital Command Center", bn: "হাসপাতাল কমান্ড সেন্টার" },

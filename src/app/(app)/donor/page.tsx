@@ -3,13 +3,27 @@
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
-import { Droplet, Star, CalendarClock, CheckCircle2, History } from "lucide-react";
+import {
+  Droplet,
+  Star,
+  CalendarClock,
+  CheckCircle2,
+  History,
+  UserPlus,
+  BadgeCheck,
+  HeartHandshake,
+  MapPin,
+} from "lucide-react";
 import { IncomingRequest } from "@/components/donor/incoming-request";
+import { DonorRegister } from "@/components/donor/donor-register";
 import { Switch } from "@/components/ui/switch";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useUserStore } from "@/store/user-store";
+import { useMapStore } from "@/store/map-store";
+import { useEmergencyStore } from "@/store/emergency-store";
 import { MOCK_DONORS } from "@/data/mock-donors";
 import { MOCK_HOSPITALS } from "@/data/mock-hospitals";
 import { estimateEtaMin, distanceKm } from "@/lib/eta";
@@ -24,14 +38,21 @@ const HISTORY = [
   { date: "2025-07-19", hospital: "Labaid Specialized", units: 1 },
 ];
 
+const OPEN_STATUSES = ["searching", "matched", "en_route"];
+
 export default function DonorPage() {
   const { t, n, locale } = useT();
   const donorId = useUserStore((s) => s.donorId);
-  const donor = MOCK_DONORS.find((d) => d.id === donorId) ?? MOCK_DONORS[0];
+  const registered = useUserStore((s) => s.registered);
+  const donors = useMapStore((s) => s.donors);
+  const donor = donors.find((d) => d.id === donorId) ?? MOCK_DONORS[0];
+  const liveEmergencies = useEmergencyStore((s) => s.liveEmergencies);
 
   const [available, setAvailable] = React.useState(true);
+  const [showRegister, setShowRegister] = React.useState(false);
   const [incoming, setIncoming] = React.useState<Emergency | null>(null);
   const [accepted, setAccepted] = React.useState(false);
+  const [donated, setDonated] = React.useState<string[]>([]);
 
   // While available and idle, surface a simulated incoming request.
   React.useEffect(() => {
@@ -53,22 +74,31 @@ export default function DonorPage() {
         matchedDonorIds: [],
         createdAt: Date.now(),
       });
-    }, 2200);
+    }, 2600);
     return () => clearTimeout(id);
   }, [available, incoming, accepted, donor.bloodGroup]);
 
   const hospital = MOCK_HOSPITALS[1];
-  const dist = distanceKm(donor, hospital);
   const eta = estimateEtaMin(donor, hospital);
-
   const name = locale === "bn" ? donor.nameBn : donor.name;
   const nextEligible = Math.max(0, 90 - donor.daysSinceLastDonation);
+
+  const openRequests = liveEmergencies.filter((e) =>
+    OPEN_STATUSES.includes(e.status),
+  );
 
   function accept() {
     setIncoming(null);
     setAccepted(true);
     toast.success(`${t("donor.accept")} · ${hospital.name}`, {
       description: `~${eta} ${t("common.min")} ETA`,
+    });
+  }
+
+  function donate(e: Emergency) {
+    setDonated((d) => [...d, e.id]);
+    toast.success(t("donor.thanksTitle"), {
+      description: `${e.bloodGroup} · ${MOCK_HOSPITALS.find((h) => h.id === e.hospitalId)?.name ?? ""}`,
     });
   }
 
@@ -84,6 +114,7 @@ export default function DonorPage() {
                 {name}
               </span>
               <Badge variant="primary">{donor.bloodGroup}</Badge>
+              {registered && <BadgeCheck className="size-4 text-info" />}
             </div>
             <div className="text-xs text-muted-foreground">
               {locale === "bn" ? donor.areaBn : donor.area} ·{" "}
@@ -110,6 +141,99 @@ export default function DonorPage() {
         </div>
       </Card>
 
+      {/* register */}
+      <div className="mb-4">
+        <AnimatePresence mode="wait">
+          {registered ? (
+            <motion.div
+              key="verified"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 rounded-3xl border border-success/30 bg-success/10 p-4"
+            >
+              <BadgeCheck className="size-6 text-success" />
+              <div className="text-sm font-semibold">{t("donor.registered")}</div>
+            </motion.div>
+          ) : showRegister ? (
+            <DonorRegister key="form" onDone={() => setShowRegister(false)} />
+          ) : (
+            <motion.button
+              key="cta"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              onClick={() => setShowRegister(true)}
+              className="glow-crimson flex w-full items-center gap-3 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/12 to-card p-4 text-left"
+            >
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-primary/20 text-primary-bright">
+                <UserPlus className="size-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="font-semibold">{t("donor.become")}</div>
+                <div className="text-xs text-muted-foreground">
+                  {t("donor.becomeHint")}
+                </div>
+              </div>
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* open requests → donate */}
+      <div className="mb-4 rounded-3xl border border-border bg-card/50 p-4">
+        <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
+          <HeartHandshake className="size-4 text-primary-bright" />
+          {t("donor.openRequests")}
+        </div>
+        {openRequests.length === 0 ? (
+          <p className="py-2 text-center text-xs text-muted-foreground">
+            {t("donor.noRequests")}
+          </p>
+        ) : (
+          <div className="space-y-2.5">
+            {openRequests.map((e) => {
+              const h = MOCK_HOSPITALS.find((x) => x.id === e.hospitalId);
+              const dist = h ? distanceKm(donor, h) : 0;
+              const min = h ? estimateEtaMin(donor, h) : 0;
+              const isDonated = donated.includes(e.id);
+              return (
+                <div
+                  key={e.id}
+                  className="flex items-center gap-3 rounded-2xl border border-border bg-white/[0.02] p-3"
+                >
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/12 text-sm font-bold text-primary-bright">
+                    {e.bloodGroup}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium">
+                      {n(e.units)} {t("common.units")}
+                      {e.isMaternal && (
+                        <span className="ml-1.5 text-[10px] text-primary-bright">
+                          ⬦ maternal
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <MapPin className="size-3" />
+                      {h ? (locale === "bn" ? h.nameBn : h.name) : ""} · {n(dist)}{" "}
+                      {t("common.km")} · ~{n(min)} {t("common.min")}
+                    </div>
+                  </div>
+                  {isDonated ? (
+                    <Badge variant="success">
+                      <CheckCircle2 className="size-3" /> {t("track.status.fulfilled")}
+                    </Badge>
+                  ) : (
+                    <Button size="sm" onClick={() => donate(e)}>
+                      {t("donor.donateNow")}
+                    </Button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
       {/* stats */}
       <div className="mb-4 grid grid-cols-3 gap-3">
         <Stat icon={<Droplet className="size-4" />} value={n(donor.totalDonations)} label={t("donor.history")} />
@@ -127,7 +251,7 @@ export default function DonorPage() {
           <div className="mb-4">
             <IncomingRequest
               emergency={incoming}
-              distanceKm={dist}
+              distanceKm={distanceKm(donor, hospital)}
               etaMin={eta}
               onAccept={accept}
               onDecline={() => setIncoming(null)}

@@ -127,7 +127,7 @@ export default function MatchingPage() {
                     onSelect={() => selectDonor(m.donor.id)}
                     onRequest={(match) => {
                       selectMatch(match);
-                      router.push(`/request/${active.id}`);
+                      router.push("/request/tracking");
                     }}
                   />
                 ))}

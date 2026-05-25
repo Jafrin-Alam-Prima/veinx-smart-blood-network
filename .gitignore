@@ -20,6 +20,9 @@
 # production
 /build
 
+# shareable static demo bundle
+veinx-demo.zip
+
 # misc
 .DS_Store
 *.pem

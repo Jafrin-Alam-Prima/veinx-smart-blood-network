@@ -33,7 +33,10 @@ a single tap:
 - 🤰 **Maternal Priority Routing** — maternal cases get boosted routing
 - 📈 **Predictive Availability** — who's most likely to respond *now*
 - 🏥 **Hospital command center** — live emergencies, supply, demand heatmap
-- 🧑‍🤝‍🧑 **Donor mode** — availability toggle, incoming requests, history
+- 🧑‍🤝‍🧑 **Donor mode** — register as a donor, availability toggle, incoming
+  requests, donate to open requests, history
+- 🎥 **Presentation studio** (`/present`) — the app inside a resizable phone
+  frame with a scene picker, made for screen recording
 - 🌐 **Full Bangla + English** — complete UI translation, persisted
 - 📴 **Offline + SMS fallback** — dispatch over SMS when there's no internet
 
@@ -154,11 +157,35 @@ All variables are optional — the app runs fully without them.
 ### Scripts
 
 ```bash
-npm run dev      # dev server (Turbopack)
-npm run build    # production build
-npm run start    # serve the production build
-npm run lint     # eslint
+npm run dev        # dev server
+npm run build      # production build
+npm run start      # serve the production build
+npm run lint       # eslint
+npm run export     # static export → ./out (shareable, no server needed)
+npm run serve:out  # preview the static export at http://localhost:8000
 ```
+
+---
+
+## 📦 Share the demo with teammates (no setup)
+
+Produce a fully static copy anyone can run on their laptop:
+
+```bash
+npm run export        # builds ./out
+```
+
+Zip the `out/` folder and send it. To run it, your teammate just:
+
+- **Windows** — double-clicks `serve.cmd`
+- **Mac/Linux** — runs `./serve.sh`
+
+…then opens `http://localhost:8000` (or `/present` for the phone-framed view).
+`out/START-HERE.txt` has the same instructions. A local server is required
+because the assets use absolute paths — opening `index.html` directly won't
+style correctly.
+
+> Alternatively, just deploy to Vercel (below) and share the URL.
 
 ---
 

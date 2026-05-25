@@ -19,18 +19,28 @@ import {
 import { Logo } from "@/components/shared/logo";
 import { cn } from "@/lib/utils";
 
+// Trailing slashes (and slash-before-query) keep these working under the
+// static export too, not just the dev/server build.
 const SCENES = [
   { icon: Home, label: "Landing", src: "/" },
-  { icon: MapPinned, label: "Live Map", src: "/map" },
-  { icon: Siren, label: "AI Matching", src: "/request/matching?seed=1" },
-  { icon: HeartHandshake, label: "Donor", src: "/donor" },
-  { icon: Building2, label: "Hospital", src: "/hospital" },
-  { icon: WifiOff, label: "Offline · SMS", src: "/request?offline=1" },
+  { icon: MapPinned, label: "Live Map", src: "/map/" },
+  { icon: Siren, label: "AI Matching", src: "/request/matching/?seed=1" },
+  { icon: HeartHandshake, label: "Donor", src: "/donor/" },
+  { icon: Building2, label: "Hospital", src: "/hospital/" },
+  { icon: WifiOff, label: "Offline · SMS", src: "/request/?offline=1" },
+];
+
+const SIZES = [
+  { label: "Compact", scale: 0.72 },
+  { label: "Default", scale: 0.9 },
+  { label: "Large", scale: 1.0 },
+  { label: "Max", scale: 1.12 },
 ];
 
 export default function PresentPage() {
   const [src, setSrc] = React.useState("/");
   const [nonce, setNonce] = React.useState(0);
+  const [scale, setScale] = React.useState(0.9);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
 
   const go = (s: string) => {
@@ -52,9 +62,35 @@ export default function PresentPage() {
           <ArrowLeft className="size-4" />
           <Logo />
         </Link>
-        <span className="hidden text-xs uppercase tracking-[0.2em] text-muted-foreground sm:block">
-          Presentation mode · record this screen
-        </span>
+        <div className="flex items-center gap-3">
+          {/* phone size control */}
+          <div className="hidden items-center gap-1 rounded-full border border-border bg-white/[0.03] p-1 sm:flex">
+            {SIZES.map((s) => (
+              <button
+                key={s.label}
+                onClick={() => setScale(s.scale)}
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
+                  Math.abs(scale - s.scale) < 0.001
+                    ? "bg-primary text-white"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+          <input
+            type="range"
+            min={0.55}
+            max={1.2}
+            step={0.01}
+            value={scale}
+            onChange={(e) => setScale(Number(e.target.value))}
+            aria-label="Phone size"
+            className="hidden w-28 accent-[var(--primary)] md:block"
+          />
+        </div>
       </header>
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-8 px-4 pb-10 lg:flex-row lg:items-center lg:gap-16">
@@ -96,7 +132,7 @@ export default function PresentPage() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="order-1 lg:order-2"
         >
-          <PhoneFrame>
+          <PhoneFrame scale={scale}>
             <iframe
               key={nonce}
               ref={iframeRef}
@@ -122,9 +158,18 @@ export default function PresentPage() {
   );
 }
 
-function PhoneFrame({ children }: { children: React.ReactNode }) {
+function PhoneFrame({
+  children,
+  scale = 1,
+}: {
+  children: React.ReactNode;
+  scale?: number;
+}) {
   return (
-    <div className="relative h-[88dvh] max-h-[860px] w-[calc(88dvh*0.462)] max-w-[400px] rounded-[3rem] border-[12px] border-[#0b0d14] bg-[#0b0d14] shadow-[0_40px_120px_-30px_rgba(255,45,85,0.35),0_30px_80px_-20px_rgba(0,0,0,0.9)]">
+    <div
+      style={{ transform: `scale(${scale})`, transformOrigin: "center" }}
+      className="relative h-[86dvh] max-h-[860px] w-[calc(86dvh*0.462)] max-w-[400px] rounded-[3rem] border-[12px] border-[#0b0d14] bg-[#0b0d14] shadow-[0_40px_120px_-30px_rgba(255,45,85,0.35),0_30px_80px_-20px_rgba(0,0,0,0.9)] transition-transform"
+    >
       {/* side buttons */}
       <span className="absolute -left-[14px] top-28 h-12 w-[3px] rounded-l bg-[#1a1f2b]" />
       <span className="absolute -left-[14px] top-44 h-16 w-[3px] rounded-l bg-[#1a1f2b]" />

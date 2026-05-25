@@ -17,12 +17,7 @@ import { useT } from "@/lib/i18n";
 import { lerp } from "@/lib/utils";
 import type { EmergencyStatus } from "@/types";
 
-export default function TrackingPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  void React.use(params);
+export default function TrackingPage() {
   const router = useRouter();
   const { t, n, locale } = useT();
   const active = useEmergencyStore((s) => s.active);

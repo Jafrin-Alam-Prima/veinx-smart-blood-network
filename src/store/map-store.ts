@@ -17,6 +17,8 @@ interface MapState {
   selectedDonorId: string | null;
   setViewport: (v: Partial<Viewport>) => void;
   selectDonor: (id: string | null) => void;
+  /** Register a new donor (e.g. from the "Become a donor" form). */
+  addDonor: (donor: Donor) => void;
   /** Sim tick: drift available donors slightly to feel "live". */
   tickDonors: () => void;
 }
@@ -31,6 +33,7 @@ export const useMapStore = create<MapState>((set) => ({
   selectedDonorId: null,
   setViewport: (v) => set((s) => ({ viewport: { ...s.viewport, ...v } })),
   selectDonor: (selectedDonorId) => set({ selectedDonorId }),
+  addDonor: (donor) => set((s) => ({ donors: [donor, ...s.donors] })),
   tickDonors: () =>
     set((s) => ({
       donors: s.donors.map((d) => {
