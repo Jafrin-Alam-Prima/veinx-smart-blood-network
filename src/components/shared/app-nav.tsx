@@ -7,7 +7,7 @@ import { Map, HeartHandshake, Building2, Plus, Wifi, WifiOff } from "lucide-reac
 import { Logo } from "./logo";
 import { LanguageToggle } from "./language-toggle";
 import { useT } from "@/lib/i18n";
-import { useUserStore } from "@/store/user-store";
+import { useUserStore, selectOffline } from "@/store/user-store";
 import { cn } from "@/lib/utils";
 import type { Role } from "@/types";
 
@@ -18,7 +18,7 @@ const NAV = [
 ];
 
 export function AppTopBar() {
-  const isOnline = useUserStore((s) => s.isOnline);
+  const isOnline = !useUserStore(selectOffline);
   return (
     <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3">
       <div className="glass mx-auto flex max-w-3xl items-center justify-between rounded-2xl px-3 py-2">
@@ -53,6 +53,9 @@ export function AppBottomNav() {
   const router = useRouter();
   const { t } = useT();
   const setRole = useUserStore((s) => s.setRole);
+
+  // Immersive flows manage their own bottom chrome.
+  if (pathname.startsWith("/request")) return null;
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3">

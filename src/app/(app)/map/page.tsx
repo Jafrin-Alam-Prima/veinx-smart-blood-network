@@ -38,7 +38,7 @@ export default function MapPage() {
       status: "searching",
       aiScore: 0,
       matchedDonorIds: [],
-      createdAt: Date.now(),
+      createdAt: 0,
     };
     return rankDonors(donors, synthetic).slice(0, 24);
   }, [donors, group]);

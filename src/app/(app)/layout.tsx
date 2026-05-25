@@ -1,6 +1,7 @@
 "use client";
 
 import { AppTopBar, AppBottomNav } from "@/components/shared/app-nav";
+import { OfflineOverlay } from "@/components/shared/offline-overlay";
 import { useSimTick, useNetworkSync } from "@/hooks/use-sim";
 
 export default function AppLayout({
@@ -16,6 +17,7 @@ export default function AppLayout({
       <AppTopBar />
       <main className="flex-1">{children}</main>
       <AppBottomNav />
+      <OfflineOverlay />
     </div>
   );
 }

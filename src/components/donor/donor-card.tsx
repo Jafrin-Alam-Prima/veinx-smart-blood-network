@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { Phone, Navigation, Star, BadgeCheck, Zap } from "lucide-react";
-import type { Donor, MatchedDonor } from "@/types";
+import type { MatchedDonor } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useT } from "@/lib/i18n";
