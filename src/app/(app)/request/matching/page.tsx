@@ -27,6 +27,8 @@ export default function MatchingPage() {
   const matches = useEmergencyStore((s) => s.matches);
   const setMatches = useEmergencyStore((s) => s.setMatches);
   const selectMatch = useEmergencyStore((s) => s.selectMatch);
+  const updateDraft = useEmergencyStore((s) => s.updateDraft);
+  const commitEmergency = useEmergencyStore((s) => s.commitEmergency);
   const donors = useMapStore((s) => s.donors);
   const setViewport = useMapStore((s) => s.setViewport);
   const selectDonor = useMapStore((s) => s.selectDonor);
@@ -34,10 +36,25 @@ export default function MatchingPage() {
 
   const [phase, setPhase] = React.useState<"matching" | "results">("matching");
 
-  // No active request → bounce back to the wizard.
+  // No active request: seed a default scenario (for /present + deep links),
+  // otherwise bounce back to the wizard.
   React.useEffect(() => {
-    if (!active) router.replace("/request");
-  }, [active, router]);
+    if (active) return;
+    const seed = new URLSearchParams(window.location.search).get("seed");
+    if (seed) {
+      updateDraft({
+        patientName: "Ayesha Siddika",
+        bloodGroup: "O-",
+        units: 2,
+        urgency: "critical",
+        isMaternal: true,
+        hospitalId: "hosp-dmch",
+      });
+      commitEmergency();
+    } else {
+      router.replace("/request");
+    }
+  }, [active, router, updateDraft, commitEmergency]);
 
   // Center the map on the emergency.
   React.useEffect(() => {

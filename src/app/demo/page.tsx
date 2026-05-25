@@ -96,7 +96,15 @@ export default function DemoPage() {
           <ArrowLeft className="size-4" />
           <Logo />
         </Link>
-        <LanguageToggle />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/present"
+            className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary-bright"
+          >
+            ▶ Present mode
+          </Link>
+          <LanguageToggle />
+        </div>
       </div>
 
       <Badge variant="ai" className="mb-3">

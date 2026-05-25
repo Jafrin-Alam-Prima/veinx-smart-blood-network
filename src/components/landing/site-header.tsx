@@ -22,14 +22,14 @@ export function SiteHeader() {
         </Link>
         <div className="flex items-center gap-2">
           <LanguageToggle className="hidden sm:inline-flex" />
+          <Link href="/present">
+            <Button size="sm" variant="ghost" className="hidden sm:inline-flex">
+              Present
+            </Button>
+          </Link>
           <Link href="/demo">
             <Button size="sm" variant="ghost" className="hidden sm:inline-flex">
               Demo
-            </Button>
-          </Link>
-          <Link href="/map">
-            <Button size="sm" variant="ghost" className="hidden sm:inline-flex">
-              {t("nav.map")}
             </Button>
           </Link>
           <Link href="/request">
