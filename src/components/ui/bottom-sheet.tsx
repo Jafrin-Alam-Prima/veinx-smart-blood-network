@@ -52,7 +52,7 @@ export function BottomSheet({
             height: expanded ? `${expandedVh}vh` : peekHeight,
           }}
           className={cn(
-            "pointer-events-auto fixed inset-x-0 bottom-0 z-40 flex flex-col rounded-t-3xl glass-strong shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.8)]",
+            "pointer-events-auto fixed inset-x-0 bottom-0 z-30 flex flex-col rounded-t-3xl glass-strong shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.8)]",
             className,
           )}
         >
