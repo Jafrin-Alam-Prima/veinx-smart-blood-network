@@ -1,517 +1,226 @@
 <div align="center">
+  <img src="./public/veinx-logo.svg" alt="VeinX" width="96" />
 
-# 🩸 VeinX
-### AI-Powered Emergency Blood Donation Intelligence Platform
+  # 🩸 VeinX
 
-#### *Transforming emergency blood response with intelligent donor orchestration, predictive matching, and real-time healthcare coordination.*
+  ### AI-powered emergency blood donation — Uber for blood, built for Bangladesh
 
-<br/>
+  [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+  [![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react)](https://react.dev)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
+  [![Tailwind](https://img.shields.io/badge/Tailwind-v4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
-[![Zustand](https://img.shields.io/badge/Zustand-State_Management-orange?style=for-the-badge)](https://zustand-demo.pmnd.rs)
-[![AI Matching](https://img.shields.io/badge/AI-Smart_Matching-red?style=for-the-badge)](#)
-[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#license)
-
-<br/>
-
-### 🚨 “In Bangladesh, finding blood during an emergency still depends on Facebook posts, random phone calls, and luck.”
-
-### VeinX replaces chaos with intelligent, real-time donor coordination.
-
+  **People still search Facebook during blood emergencies.**
+  **VeinX replaces chaos with instant, intelligent donor matching.**
 </div>
 
 ---
 
-# 📌 Executive Summary
+## The problem
 
-VeinX is an AI-native emergency blood donation ecosystem designed to modernize the fragmented blood request process in Bangladesh and other developing regions.
+In Bangladesh, a blood emergency still means posting in scattered Facebook
+groups, calling random contacts, and losing critical minutes. There is no
+unified, real-time system to find a verified, compatible donor nearby.
 
-The platform combines:
+## The solution
 
-- 🧠 AI-powered donor prioritization
-- 📍 Real-time geospatial donor discovery
-- ⚡ Emergency severity scoring
-- 📊 Predictive donor availability modeling
-- 🏥 Hospital coordination dashboards
-- 🌐 Offline-first communication workflows
-- 📡 SMS fallback dispatch systems
+VeinX is an AI-native, mobile-first platform that turns a blood emergency into
+a single tap:
 
-to create a next-generation healthcare logistics platform capable of reducing emergency response time during critical blood shortages.
+- 🗺️ **Live donor map** — Uber/Pathao-style, with glowing, pulsing donors
+- ⚡ **AI Emergency Score** — every request triaged 0–100
+- 🧠 **Smart Match** — donors ranked by compatibility, proximity, availability & reliability
+- 🤰 **Maternal Priority Routing** — maternal cases get boosted routing
+- 📈 **Predictive Availability** — who's most likely to respond *now*
+- 🏥 **Hospital command center** — live emergencies, supply, demand heatmap
+- 🧑‍🤝‍🧑 **Donor mode** — register as a donor, availability toggle, incoming
+  requests, donate to open requests, history
+- 🎥 **Presentation studio** (`/present`) — the app inside a resizable phone
+  frame with a scene picker, made for screen recording
+- 🌐 **Full Bangla + English** — complete UI translation, persisted
+- 📴 **Offline + SMS fallback** — dispatch over SMS when there's no internet
 
-Unlike traditional donor directories, VeinX acts as an **intelligent orchestration layer** between patients, hospitals, and volunteer donors.
-
----
-
-# 🚨 Problem Statement
-
-## Existing Crisis
-
-In many developing countries, especially Bangladesh, emergency blood requests still rely on:
-
-- Facebook groups
-- Messenger broadcasts
-- Random phone calls
-- Unverified donor lists
-- Manual coordination
-
-This results in:
-
-- ⏳ Delayed emergency response
-- ❌ Unverified donor compatibility
-- 📉 High donor dropout rate
-- 🏥 Hospital coordination failure
-- 📍 No location intelligence
-- 🚫 No urgency prioritization
-- 🤰 Maternal emergency neglect
-- 🌐 Internet dependency during crises
-
-During maternal emergencies, accident trauma, surgeries, or rare blood group shortages, these inefficiencies can directly cost lives.
+> **Note:** This is a hackathon **demo product**. The backend is fully
+> simulated (mock data + a client-side "Mock Engine"); there are no real
+> servers, accounts, or messages sent.
 
 ---
 
-# 💡 Proposed Solution
+## ✨ Demo scenarios
 
-VeinX introduces a fully digital, AI-assisted emergency blood coordination platform that intelligently connects patients, hospitals, and nearby donors in real time.
+A built-in control room at [`/demo`](http://localhost:3000/demo) maps one tap to
+each beat of a 3-minute pitch video:
 
-The system uses:
-
-- Intelligent compatibility ranking
-- Geospatial proximity analysis
-- AI urgency estimation
-- Predictive donor responsiveness
-- Real-time route simulation
-- Hospital command analytics
-
-to minimize response latency and maximize successful blood fulfillment.
+| Time | Scene | What it shows |
+|------|-------|---------------|
+| 0:30–1:00 | **City Pulse** | Live Dhaka donor map, filtered by blood group |
+| 1:00–2:00 | **The Emergency** | Maternal O− request → AI matching → best donor |
+| 1:30–2:00 | **The Donor's Call** | Incoming request with countdown → accept → en route |
+| 2:00–2:30 | **Offline · SMS Fallback** | No internet → SMS dispatch to nearby donors |
+| 2:30–3:00 | **Command Center** | Hospital ops: live board, supply, heatmap, analytics |
 
 ---
 
-# 🧠 Core AI Capabilities
+## 🏗️ Architecture
 
-## 1. Smart Match Engine
+Frontend-only. A client-side **Mock Engine** simulates real-time movement and
+events so the product *feels* live without any backend.
 
-Every donor is ranked using a weighted multi-factor AI scoring system.
-
-```text
-Smart Match Score =
-30 × Blood Compatibility
-+ 28 × Distance Proximity
-+ 20 × Availability
-+ 12 × Reliability
-+ 10 × Maternal Priority
-````
-
-The algorithm dynamically ranks eligible donors based on:
-
-* Blood group compatibility
-* Estimated arrival time (ETA)
-* Live availability
-* Historical response behavior
-* Emergency criticality
-* Maternal risk factor
-
----
-
-## 2. AI Emergency Score
-
-VeinX generates an Emergency Severity Score (0–100) using:
-
-* Blood rarity
-* Required units
-* Hospital urgency
-* Supply-demand imbalance
-* Maternal emergency flag
-* Time sensitivity
-
-This allows intelligent triaging and prioritization.
-
----
-
-## 3. Predictive Donor Availability
-
-The platform estimates donor responsiveness probability using behavioral simulation factors such as:
-
-* Previous response history
-* Active availability status
-* Recent donations
-* Time-of-day likelihood
-* Proximity movement pattern
-
----
-
-## 4. Explainable AI Decisions
-
-Unlike black-box systems, VeinX provides transparent reasoning behind donor selection.
-
-Example:
-
-```text
-Matched because:
-✓ O− compatible
-✓ Only 2.1 km away
-✓ Active within last 5 mins
-✓ High reliability score
-✓ Previous successful donations
+```
+┌──────────────────────── Next.js 16 App Router (RSC) ────────────────────────┐
+│                                                                              │
+│   Marketing (Server)         App shell (Client)        Mock Engine           │
+│   ┌──────────────┐           ┌──────────────┐          ┌──────────────────┐  │
+│   │  /  landing  │           │  /map        │          │ lib/matching  AI │  │
+│   └──────────────┘           │  /request/*  │◄────────►│ lib/eta  haversine│ │
+│                              │  /donor      │          │ hooks/use-sim tick│ │
+│                              │  /hospital   │          └────────┬─────────┘  │
+│                              └──────┬───────┘                   │            │
+│            ┌────────────────────────┼─────────────────┐         │            │
+│            ▼                        ▼                  ▼         ▼            │
+│   ┌────────────────┐      ┌──────────────────┐   ┌──────────────────────┐    │
+│   │ Zustand stores │      │  React Query      │   │ Custom map renderer  │    │
+│   │ user/map/      │      │  (mock fetches)   │   │ (projection + SVG,   │    │
+│   │ emergency/lang │      └──────────────────┘   │  no token required)  │    │
+│   └────────────────┘                             └──────────────────────┘    │
+└──────────────────────────────────────────────────────────────────────────────┘
 ```
 
----
+### Project structure
 
-# 🌍 Key Features
-
-## 🗺️ Live Donor Intelligence Map
-
-* Uber-style real-time donor visualization
-* Dynamic location simulation
-* Radius detection
-* Route estimation
-* Heatmap clustering
-
----
-
-## ⚡ Emergency Dispatch Workflow
-
-```text
-Emergency Created
-        ↓
-AI Severity Analysis
-        ↓
-Smart Donor Ranking
-        ↓
-Nearest Compatible Donors
-        ↓
-Push / SMS Dispatch
-        ↓
-Live Tracking
-        ↓
-Hospital Confirmation
 ```
-
----
-
-## 🏥 Hospital Command Center
-
-Administrative healthcare dashboard featuring:
-
-* Live emergency queue
-* Blood demand heatmaps
-* Supply analytics
-* Donor activity metrics
-* Real-time incident monitoring
-* Regional shortage visualization
-
----
-
-## 🤰 Maternal Emergency Prioritization
-
-Maternal emergencies receive:
-
-* Priority routing
-* Elevated AI severity weighting
-* Faster donor dispatch
-* Dedicated visual indicators
-
----
-
-## 📴 Offline + SMS Fallback
-
-In low-connectivity regions:
-
-* SMS-based donor dispatch activates automatically
-* Emergency requests continue functioning
-* Internet dependency is minimized
-
-Designed specifically for infrastructure-constrained environments.
----
-
-# 🏗️ System Architecture
-
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                         VeinX Platform Architecture                 │
-└─────────────────────────────────────────────────────────────────────┘
-
-Frontend Layer
-│
-├── Next.js 16 App Router
-├── React 19 Client Components
-├── TailwindCSS v4 UI System
-├── Motion Animation Engine
-└── Responsive Mobile-First UX
-
-Application Layer
-│
-├── AI Smart Matching Engine
-├── Emergency Severity Analyzer
-├── ETA Prediction Module
-├── Geospatial Distance Engine
-├── Mock Real-Time Simulation Engine
-└── Offline Communication Manager
-
-State & Data Layer
-│
-├── Zustand Global Stores
-├── TanStack Query Cache
-├── Mock Real-Time Streams
-└── Event Synchronization Hooks
-
-Visualization Layer
-│
-├── Interactive SVG Map Renderer
-├── Animated Donor Nodes
-├── Hospital Analytics Dashboard
-├── Supply-Demand Heatmaps
-└── Route Projection System
-```
-
----
-
-# 📂 Project Structure
-
-```bash
 src/
 ├── app/
-│   ├── demo/
-│   ├── donor/
-│   ├── hospital/
-│   ├── map/
-│   ├── request/
-│   └── present/
-│
+│   ├── page.tsx                  landing
+│   ├── demo/                     scenario launcher
+│   └── (app)/                    app shell (top bar + bottom nav + offline)
+│       ├── map/                  live donor map
+│       ├── request/              wizard → matching → [id] tracking
+│       ├── donor/                donor dashboard
+│       └── hospital/             hospital command center
 ├── components/
-│   ├── emergency/
-│   ├── hospital/
-│   ├── map/
-│   ├── donor/
-│   ├── ui/
-│   └── shared/
-│
-├── hooks/
-├── store/
-├── data/
-├── lib/
-│   ├── matching/
-│   ├── eta/
-│   ├── simulation/
-│   ├── geospatial/
-│   └── ai/
-│
-└── types/
+│   ├── ui/                       design-system primitives (hand-rolled)
+│   ├── map/                      MapCanvas, markers, radius, route line
+│   ├── emergency/                wizard inputs, matching overlay, triage
+│   ├── donor/ landing/ hospital/ shared/
+├── lib/                          matching (AI), eta, constants, i18n, motion
+├── data/                         Dhaka-realistic mock donors/hospitals/etc.
+├── store/                        Zustand stores
+├── hooks/                        sim tick + network sync
+└── types/                        domain model
 ```
 
----
+### The AI matching model
 
-# ⚙️ Technical Highlights
+`lib/matching.ts` scores every compatible, eligible donor against a request:
 
-## Frontend Engineering
+```
+Smart Match = 30·compatibility + 28·proximity + 20·availability
+            + 12·reliability   + 10·maternal     (clamped 0–99)
+```
 
-* React Server Components (RSC)
-* App Router architecture
-* Client-side simulation engine
-* Dynamic state synchronization
-* Optimistic UI updates
-* Responsive design system
-
----
-
-## Geospatial Intelligence
-
-VeinX uses:
-
-* Haversine distance calculations
-* Dynamic proximity scoring
-* Radius filtering
-* Route simulation
-* Spatial clustering logic
-
-to identify optimal donor candidates.
+Each score ships with **explainable reasons** (shown in the triage panel), and
+the request gets an overall **AI Emergency Score** from urgency, units, supply
+scarcity, and the maternal flag.
 
 ---
 
-## AI/ML Design Philosophy
-
-Although the current version operates using simulation logic and weighted intelligence models, the architecture is intentionally designed for future ML integration:
-
-Future upgrades may include:
-
-* Reinforcement learning
-* Demand forecasting
-* Time-series shortage prediction
-* ML donor response prediction
-* LLM-assisted emergency triage
-* AI voice dispatch systems
-
----
-
-# 🚀 Getting Started
-
-## Installation
+## 🚀 Getting started
 
 ```bash
-git clone https://github.com/your-username/veinx.git
-
-cd veinx
-
+# 1. Install
 npm install
+
+# 2. (Optional) configure environment
+cp .env.example .env.local
+
+# 3. Run
+npm run dev          # http://localhost:3000
 ```
 
----
+Open [`/demo`](http://localhost:3000/demo) to drive the pitch scenarios.
 
-## Run Development Server
+### Environment
+
+All variables are optional — the app runs fully without them.
+
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Enables real Mapbox tiles. **Without it, VeinX uses its built-in stylized map** (no token needed for the demo). |
+| `NEXT_PUBLIC_APP_NAME` | App name. |
+| `NEXT_PUBLIC_DEMO_MODE` | Demo affordances. |
+
+> ⚠️ `NEXT_PUBLIC_MAPBOX_TOKEN` ships to the browser. If you enable real tiles,
+> **restrict the token to your domain** (URL restrictions) in the Mapbox
+> dashboard before deploying publicly.
+
+### Scripts
 
 ```bash
-npm run dev
+npm run dev        # dev server
+npm run build      # production build
+npm run start      # serve the production build
+npm run lint       # eslint
+npm run export     # static export → ./out (shareable, no server needed)
+npm run serve:out  # preview the static export at http://localhost:8000
 ```
 
-Open:
+---
+
+## 📦 Share the demo with teammates (no setup)
+
+Produce a fully static copy anyone can run on their laptop:
 
 ```bash
-http://localhost:3000
+npm run export        # builds ./out
 ```
 
-Demo mode:
+Zip the `out/` folder and send it. To run it, your teammate just:
+
+- **Windows** — double-clicks `serve.cmd`
+- **Mac/Linux** — runs `./serve.sh`
+
+…then opens `http://localhost:8000` (or `/present` for the phone-framed view).
+`out/START-HERE.txt` has the same instructions. A local server is required
+because the assets use absolute paths — opening `index.html` directly won't
+style correctly.
+
+> Alternatively, just deploy to Vercel (below) and share the URL.
+
+---
+
+## ☁️ Deploy to Vercel
+
+1. Push this repo to GitHub.
+2. Import it at [vercel.com/new](https://vercel.com/new) — the framework is
+   auto-detected (Next.js 16).
+3. (Optional) add `NEXT_PUBLIC_MAPBOX_TOKEN` under **Project → Settings →
+   Environment Variables** for real tiles.
+4. Deploy. No other configuration required.
 
 ```bash
-http://localhost:3000/demo
-```
-
-Presentation mode:
-
-```bash
-http://localhost:3000/present
+# or from the CLI
+npm i -g vercel && vercel
 ```
 
 ---
 
-# 🔧 Environment Variables
+## 🧰 Tech stack
 
-```env
-NEXT_PUBLIC_MAPBOX_TOKEN=
-NEXT_PUBLIC_APP_NAME=VeinX
-NEXT_PUBLIC_DEMO_MODE=true
-```
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 ·
+Motion (Framer Motion) · Zustand · TanStack Query · Recharts ·
+Lucide · Sonner · custom token-free map renderer.
 
----
+## 📸 Screenshots
 
-# 📦 Production Build
+> _Add captures here: landing · live map · AI matching · triage · tracking · hospital._
 
-```bash
-npm run build
-npm run start
-```
-
----
-
-# ☁️ Deployment
-
-## Deploy to Vercel
-
-```bash
-npm i -g vercel
-vercel
-```
-
-or import directly into Vercel dashboard.
-
----
-
-# 🧰 Tech Stack
-
-## Frontend
-
-* Next.js 16
-* React 19
-* TypeScript
-* TailwindCSS v4
-
-## State & Data
-
-* Zustand
-* TanStack Query
-
-## Visualization
-
-* Recharts
-* SVG Rendering Engine
-* Motion / Framer Motion
-
-## Simulation
-
-* Real-time Mock Engine
-* Event Tick Synchronization
-* Offline Queue Simulation
-
----
-
-# 📊 Scalability Vision
-
-VeinX is architected as a scalable healthcare coordination platform.
-
-Potential expansion includes:
-
-* National blood bank integration
-* Ambulance coordination
-* Government hospital APIs
-* AI demand forecasting
-* Emergency drone routing
-* Multi-country deployment
-* Healthcare IoT integration
-
----
-
-# 🔒 Ethical & Social Impact
-
-VeinX focuses on:
-
-* Healthcare accessibility
-* Maternal emergency support
-* Faster emergency response
-* Community-driven donation
-* Ethical AI transparency
-* Inclusive low-connectivity design
-
----
-
-# 📸 Screenshots
-
-| Landing        | Emergency Match | Hospital Dashboard |
-| -------------- | --------------- | ------------------ |
-| Add Screenshot | Add Screenshot  | Add Screenshot     |
-
----
-
-# 🧪 Research & Innovation Potential
-
-This project demonstrates applied research in:
-
-* AI for Healthcare
-* Emergency Response Systems
-* Human-Centered AI
-* Geospatial Computing
-* Smart Routing Systems
-* Digital Health Infrastructure
-
----
-
-# 📄 License
-
-MIT License
-
----
-
-# 👨‍💻 Authors
-
-### Team VeinX
-
-Built with the vision of making emergency blood access intelligent, fast, and accessible for everyone.
+| Landing | Live map | AI matching |
+|---|---|---|
+| _todo_ | _todo_ | _todo_ |
 
 ---
 
 <div align="center">
-
-## ❤️ Built for Bangladesh. Designed for Global Healthcare Innovation.
-
+  Built for Bangladesh. Designed for the world. · Demo product · MIT
 </div>
-
