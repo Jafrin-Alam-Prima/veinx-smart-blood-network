@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="./public/veinx-logo.svg" alt="VeinX" width="120" />
-
 # 🩸 VeinX
 ### AI-Powered Emergency Blood Donation Intelligence Platform
 
