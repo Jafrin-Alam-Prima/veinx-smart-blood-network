@@ -1,7 +1,12 @@
 <div align="center">
+<<<<<<< HEAD
   <img src="./public/veinx-logo.svg" alt="VeinX" width="96" />
 
   # 🩸 VeinX
+=======
+   
+   # 🩸 VeinX
+>>>>>>> 4a9aa8f45baa947cc82a5e68dafad0260a564878
 
   ### AI-powered emergency blood donation — Uber for blood, built for Bangladesh
 
@@ -46,6 +51,7 @@ a single tap:
 
 ---
 
+<<<<<<< HEAD
 ## ✨ Demo scenarios
 
 A built-in control room at [`/demo`](http://localhost:3000/demo) maps one tap to
@@ -59,6 +65,8 @@ each beat of a 3-minute pitch video:
 | 2:00–2:30 | **Offline · SMS Fallback** | No internet → SMS dispatch to nearby donors |
 | 2:30–3:00 | **Command Center** | Hospital ops: live board, supply, heatmap, analytics |
 
+=======
+>>>>>>> 4a9aa8f45baa947cc82a5e68dafad0260a564878
 ---
 
 ## 🏗️ Architecture
