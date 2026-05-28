@@ -45,19 +45,6 @@ a single tap:
 
 ---
 
-## ✨ Demo scenarios
-
-A built-in control room at [`/demo`](http://localhost:3000/demo) maps one tap to
-each beat of a 3-minute pitch video:
-
-| Time | Scene | What it shows |
-|------|-------|---------------|
-| 0:30–1:00 | **City Pulse** | Live Dhaka donor map, filtered by blood group |
-| 1:00–2:00 | **The Emergency** | Maternal O− request → AI matching → best donor |
-| 1:30–2:00 | **The Donor's Call** | Incoming request with countdown → accept → en route |
-| 2:00–2:30 | **Offline · SMS Fallback** | No internet → SMS dispatch to nearby donors |
-| 2:30–3:00 | **Command Center** | Hospital ops: live board, supply, heatmap, analytics |
-
 ---
 
 ## 🏗️ Architecture
