@@ -1,4 +1,3 @@
-````md
 <div align="center">
 
 <img src="./public/veinx-logo.svg" alt="VeinX" width="120" />
@@ -517,4 +516,4 @@ Built with the vision of making emergency blood access intelligent, fast, and ac
 ## ❤️ Built for Bangladesh. Designed for Global Healthcare Innovation.
 
 </div>
-```
+
