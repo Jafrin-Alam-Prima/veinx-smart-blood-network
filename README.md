@@ -1,7 +1,5 @@
 <div align="center">
-  <img src="./public/veinx-logo.svg" alt="VeinX" width="96" />
-
-  # 🩸 VeinX
+   # 🩸 VeinX
 
   ### AI-powered emergency blood donation — Uber for blood, built for Bangladesh
 
